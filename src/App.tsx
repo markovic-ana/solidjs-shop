@@ -1,13 +1,27 @@
-import type { Component } from "solid-js";
+import { createSignal, type Component } from "solid-js";
 
 import banner from "./assets/banner.png";
 import { Card } from "./components/Card";
 
 const App: Component = () => {
+  const [darkMode, setDarkMode] = createSignal(false);
+
+  const toggleTheme = () => {
+    setDarkMode(!darkMode());
+  };
+
   return (
     <div class="container m-auto">
-      <header>
-        <span class="material-symbols-outlined cursor-pointer">light_mode</span>
+      <header
+        class="my-4 p-2 text-xl flex items-center gap-4"
+        classList={{ "bg-neutral-900": darkMode(), "text-white": darkMode() }}
+      >
+        <span
+          class="material-symbols-outlined cursor-pointer"
+          onClick={toggleTheme}
+        >
+          light_mode
+        </span>
         <h1>Ninja Merch</h1>
       </header>
 
