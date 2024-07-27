@@ -6,9 +6,15 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: rgba(211, 211, 211, 0.298);
+}
+
+.btn {
+  @apply bg-amber-600
+  py-2 px-3 my-2
+  inline-block
+  text-white
+  rounded-md
+  border-2
+  border-amber-600;
 }

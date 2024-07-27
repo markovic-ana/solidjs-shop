@@ -1,9 +1,22 @@
 import type { Component } from "solid-js";
 
+import banner from "./assets/banner.png";
+import { Card } from "./components/Card";
+
 const App: Component = () => {
   return (
-    <div>
-      <h1 class="text-3xl font-bold underline">Hello world!</h1>
+    <div class="container m-auto">
+      <header>
+        <h1>Ninja Merch</h1>
+      </header>
+
+      <img class="rounded-md" src={banner} alt="site banner" />
+
+      <div class="grid grid-cols-4 gap-10 my-4">
+        <Card />
+        <Card />
+        <Card />
+      </div>
     </div>
   );
 };
