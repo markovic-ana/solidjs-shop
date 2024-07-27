@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply m-0
+  @apply m-6
   p-0
   box-border
   bg-gray-200;
