@@ -6,19 +6,17 @@ export type ICartProduct = Omit<IProduct, "img" | "description"> & {
   quantity: number;
 };
 
-interface CartContextType {
-  items: ICartProduct[];
-  setItems: (items: ICartProduct[]) => void;
+function useCartProviderValue() {
+  const [items, setItems] = createStore<ICartProduct[]>([]);
+  return { items, setItems };
 }
 
-export const CartContext = createContext<CartContextType>({
-  items: [],
-  setItems: () => {},
-});
+export type CartContextType = ReturnType<typeof useCartProviderValue>;
+
+const CartContext = createContext<CartContextType>();
 
 export const CartProvider: ParentComponent = (props) => {
-  const [items, setItems] = createStore<ICartProduct[]>([]);
-
+  const { items, setItems } = useCartProviderValue();
   return (
     <CartContext.Provider value={{ items, setItems }}>
       {props.children}
@@ -27,5 +25,9 @@ export const CartProvider: ParentComponent = (props) => {
 };
 
 export function useCartContext() {
-  return useContext(CartContext);
+  const context = useContext(CartContext);
+  if (context === undefined) {
+    throw new Error(`useCartContext must be used within a CartProvider`);
+  }
+  return context;
 }

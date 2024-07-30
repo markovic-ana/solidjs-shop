@@ -1,6 +1,6 @@
 import { For, Show, useContext } from "solid-js";
 import Card from "../components/Card";
-import { CartContext, useCartContext } from "../context/CartContext";
+import { useCartContext } from "../context/CartContext";
 
 export default function Cart() {
   const { items } = useCartContext();
