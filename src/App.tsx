@@ -8,14 +8,21 @@ import {
 import { A } from "@solidjs/router";
 
 import banner from "./assets/banner.png";
+import { useCartContext } from "./context/CartContext";
 
 const Home = lazy(() => import("./pages/Home"));
 
 const App: ParentComponent = (props) => {
   const [darkMode, setDarkMode] = createSignal(false);
 
+  const { items } = useCartContext();
+
   const toggleTheme = () => {
     setDarkMode(!darkMode());
+  };
+
+  const totalItems = () => {
+    return items.reduce((acc, item) => acc + item.quantity, 0);
   };
 
   return (
@@ -33,7 +40,7 @@ const App: ParentComponent = (props) => {
         <h1>Ninja Merch</h1>
 
         <A href="/">Home</A>
-        <A href="/cart">Cart</A>
+        <A href="/cart">Cart ({totalItems()})</A>
       </header>
 
       <img class="rounded-md" src={banner} alt="site banner" />

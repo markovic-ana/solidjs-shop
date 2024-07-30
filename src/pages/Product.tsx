@@ -1,5 +1,5 @@
 import { useParams } from "@solidjs/router";
-import { Show, createResource } from "solid-js";
+import { Show, createResource, createSignal } from "solid-js";
 import { IProduct } from "./Home";
 import { ICartProduct, useCartContext } from "../context/CartContext";
 
@@ -10,20 +10,31 @@ const fetchProduct = async (id: string): Promise<IProduct> => {
 
 export default function Product() {
   const params = useParams();
+
   const [product] = createResource(params.id, fetchProduct);
+  const [adding, setAdding] = createSignal(false);
 
   const { items, setItems } = useCartContext();
 
   const addProduct = () => {
-    if (!product()) return;
-    const exists = items.find((item) => item.id === product()?.id);
+    setAdding(true);
 
-    exists &&
-      setItems(
-        (p) => p.id === product()?.id,
-        "quantity",
-        (curr) => curr + 1,
-      );
+    setTimeout(() => {
+      setAdding(false);
+    }, 2000);
+
+    const currentProduct = product();
+    if (!currentProduct) return;
+
+    const exists = items.find((item) => item.id === currentProduct.id);
+
+    exists
+      ? setItems(
+          (item) => item.id === currentProduct.id,
+          "quantity",
+          (q) => q + 1,
+        )
+      : setItems([...items, { ...currentProduct, quantity: 1 }]);
   };
 
   return (
@@ -39,9 +50,15 @@ export default function Product() {
             <p>{product()?.description}</p>
             <p class="my-7 text-2xl">Only £{product()?.price}</p>
 
-            <button class="btn" onClick={addProduct}>
+            <button class="btn" onClick={addProduct} disabled={adding()}>
               Add to cart
             </button>
+
+            <Show when={adding()}>
+              <div class="m-2 p-2 border-amber-500 border-2 rounded-md inline-block">
+                {product()?.title} was added to the cart
+              </div>
+            </Show>
           </div>
         </div>
       </Show>
