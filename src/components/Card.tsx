@@ -6,7 +6,7 @@ interface ICardProps {
   rounded?: boolean;
 }
 
-export const Card: Component<ICardProps> = (props) => {
+export default function Card(props: ICardProps) {
   const safeChildren = children(() => props.children);
 
   return (
@@ -17,4 +17,4 @@ export const Card: Component<ICardProps> = (props) => {
       {safeChildren()}
     </div>
   );
-};
+}

@@ -1,9 +1,17 @@
-import { createSignal, type Component } from "solid-js";
+import {
+  JSX,
+  ParentComponent,
+  createSignal,
+  lazy,
+  type Component,
+} from "solid-js";
+import { A } from "@solidjs/router";
 
 import banner from "./assets/banner.png";
-import { Card } from "./components/Card";
 
-const App: Component = () => {
+const Home = lazy(() => import("./pages/Home"));
+
+const App: ParentComponent = (props) => {
   const [darkMode, setDarkMode] = createSignal(false);
 
   const toggleTheme = () => {
@@ -23,29 +31,14 @@ const App: Component = () => {
           light_mode
         </span>
         <h1>Ninja Merch</h1>
+
+        <A href="/">Home</A>
+        <A href="/cart">Cart</A>
       </header>
 
       <img class="rounded-md" src={banner} alt="site banner" />
 
-      <div class="grid grid-cols-4 gap-10 my-4">
-        <Card rounded>
-          <h2>1</h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
-            nam voluptas dicta ad fuga. Id!
-          </p>
-          <button class="btn">view</button>{" "}
-        </Card>
-        <Card rounded>
-          <h2>2</h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
-            nam voluptas dicta ad fuga. Id!
-          </p>
-          <button class="btn">view</button>
-          <p>Only $10</p>
-        </Card>
-      </div>
+      {props.children}
     </div>
   );
 };
